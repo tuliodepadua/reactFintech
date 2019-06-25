@@ -1,0 +1,22 @@
+$cor0: rgba(0,0,0,.1);
+$cor1: #039be5;
+$cor2: #00e676;
+$cor3: #757575;
+
+.transicao{
+    transition:all .3s linear !important;
+    -webkit-transition:all .3s linear !important;
+    -moz-transition:all .3s linear !important;
+}
+.btn-theme {
+    background: $cor1 !important;
+    @extend .transicao;
+}
+
+.btn-theme:hover {
+    background: $cor2 !important;
+    @extend .transicao;
+}
+.posrel{
+    position: relative;
+}
