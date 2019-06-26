@@ -63,7 +63,7 @@ export default class Formcadastro extends Component {
         let cpfValueRec = e.target.value.replace(/[^0-9]/g, "")
         let cpfValue = Utils.MontCPF(cpfValueRec)
         e.target.value = cpfValue;
-        this.handleChange({ cpf: cpfValueRec })
+        this.handleChange({ cpf: cpfValueRec.substr(0, 11) })
     }
 
     handleChangeTelefone = (e) => {
@@ -78,7 +78,7 @@ export default class Formcadastro extends Component {
     }
 
     handleChangeNome = (e) => {
-        this.handleChange({ email: e.target.value })
+        this.handleChange({ nome: e.target.value })
     }
 
     handleChange(state = {}) {
@@ -113,20 +113,22 @@ export default class Formcadastro extends Component {
 
     verificaForm() {
         let error = [];
-
+         
         if (this.state.nome.indexOf(' ') !== -1) {
             let vlr = this.state.nome.split(' ');
             if (vlr[1].length == 0) {
                 error.push('nomecompleto')
             }
         } else {
+            
             error.push('nomecompleto')
         }
 
         if (this.state.datanasc == '') {
             error.push('datanasc')
         }
-         
+        
+        console.log(this.state.cpf)
         if (Utils.CPF(this.state.cpf) === 1 || Utils.CPF(this.state.cpf) === undefined) {
         
             error.push('cpf');
@@ -150,6 +152,8 @@ export default class Formcadastro extends Component {
             error.push('Email')
         }
 
+
+        console.log(error)
         if (this.state.objUs.hasOwnProperty('_id')) {
             if (
                 this.state.objUs.nome === this.state.nome &&
@@ -199,7 +203,7 @@ export default class Formcadastro extends Component {
             }).finally(function () { });
         } else {
             api.post(`/registro`, obj).then(function (response) {
-                console.log(response)
+                 
                 switch (response.status) {
                     case 201:
                         M.toast({ html: response.data })
