@@ -4,13 +4,7 @@ export const Form = styled.form`
     
     margin: 0 -.75rem;
     
-    input{
-        font-size: 14px !important;
-    }
-    input::placeholder{
-        font-size: 14px;
-
-    }
+    
     .btn-theme{
         margin-top: -5px;
         float: right;

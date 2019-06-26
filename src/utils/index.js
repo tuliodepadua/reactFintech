@@ -2,20 +2,10 @@ const app = {
     CPF(r_vlr) {
         if (r_vlr !== "" ) {
             let cpf = r_vlr.replace(/[^0-9]/g, "");
-            if (
-                cpf === "00000000000" ||
-                cpf === "11111111111" ||
-                cpf === "22222222222" ||
-                cpf === "33333333333" ||
-                cpf === "44444444444" ||
-                cpf === "55555555555" ||
-                cpf === "66666666666" ||
-                cpf === "77777777777" ||
-                cpf === "88888888888" ||
-                cpf === "99999999999" || 
-                cpf.length < 11
-            ) {
-                
+
+            let cpfValidos = Array(10).fill().map((e, i) => Array(11).fill(new String(i)).join(''));
+
+            if ( cpfValidos.indexOf(cpf) != -1 || cpf.length < 11 ) {
                 return 1;
             }
             if (cpf.length == 11) {
@@ -45,7 +35,6 @@ const app = {
         }
     },
     email(r_vlr) {
-         
         let emailFilter = /^.+@.+\..{2,}$/;
         let illegalChars = /[\(\)\<\>\,\;\:\\\/\"\[\]]/;
         if (!emailFilter.test(r_vlr) || r_vlr.match(illegalChars)) {

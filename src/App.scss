@@ -4,3 +4,20 @@ body {
   background: $cor1;
 }
 
+input{
+  font-size: 12px !important;
+}
+input:focus{
+  border-bottom: 1px solid #039be5 !important;
+  box-shadow: none !important;
+}
+input.error{
+  border-bottom: 1px solid red !important;
+}
+input.error:focus{
+  box-shadow: none !important;
+  /* box-shadow: 0 1px 0 0 red; */
+}
+input::placeholder{
+  font-size: 12px;
+}

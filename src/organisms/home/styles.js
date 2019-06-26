@@ -18,6 +18,7 @@ export const ListaUsuarios = styled.div`
       padding: 20px .75rem;
       z-index: 1;
       display: inline-block;
+      min-height: 355px;
       .det1{
         background: #00e676;
         transform: rotate(3deg);

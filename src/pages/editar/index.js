@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import CadastroUsuario from './styles'
 import Titnav from '../../molecules/titnav'
 import Formcadastro from '../../molecules/formcadastro'
-import api from '../../services/api'
 
 class Editar extends Component {
     state = {
