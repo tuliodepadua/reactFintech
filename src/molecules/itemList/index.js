@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import ItemList from './styles'
 import { Icon } from '../../atoms/icon'
 import { Link } from 'react-router-dom';
+import InputText from '../../atoms/input'
  
 export default class ItemLista extends Component {
    
     render() {
         return (
-            <ItemList className='col s12'>
+            <ItemList id={`id-${this.props.chave}`} className='col s12'>
                  <Link to={`/editar/${this.props.chave}`}>
                     <div className='col s9'>
                         <h2 className='nome'>
@@ -20,6 +21,15 @@ export default class ItemLista extends Component {
                 </Link>  
                 <div className="col s3 acoes">              
                     <Icon classe='delete' icon="delete" acao={this.props.acao} />
+                </div>
+
+                <div className="RemoverItem">
+                    <p>Confirme o CPF para remoção do usuário</p>
+                    <span>CPF: {this.props.cpf}</span>
+                    <InputText grid="col s12" nome={this.props.cpf} ident={this.props.chave} tipo="text" change={this.props.change} />
+
+                    <Icon classe='voltar' icon="chevron_right" acao={this.props.acao} />
+
                 </div>
             </ItemList>
         )

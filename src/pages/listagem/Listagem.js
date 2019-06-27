@@ -7,6 +7,8 @@ import ItemLista from '../../molecules/itemList'
 
 import Util from '../../utils'
 import ListaUsuarios from './styles'
+
+ 
  
 class Listagem extends Component {
   state = {
@@ -15,6 +17,7 @@ class Listagem extends Component {
     idSelect: "",
     tipoBusca: '',
     pg: 0,
+    UserSelected: []
   };
   
   async componentDidMount(){
@@ -35,11 +38,9 @@ class Listagem extends Component {
     }); 
   }
 
-  async loadUsuarios(){
-    
+  async loadUsuarios(init){
     const response = await api.get(`usuarios/${this.state.pg}`);
 
-    // 
     let nArr = []
     for (let i = 0; i < response.data.length; i++) {
       let pd = this.state.listagem.find(userSel => userSel._id == response.data[i]._id);
@@ -52,7 +53,12 @@ class Listagem extends Component {
       listagem: arr
     })
   }
-
+  buscaCpf = e => {
+      e.target.value = Util.MontCPF(`${e.target.value.replace(/[^0-9]/g, "")}`);
+      if (e.target.placeholder == e.target.value) {
+        this.ativarRemocao(e.target.name)
+      }
+  }
   buscaChange = e => {
        
       let busca = e.target.value;
@@ -129,16 +135,28 @@ class Listagem extends Component {
       //         )
       //     })    
       // })
-      
   }
 
   handleDelete = id => {
-      api.delete(`/registro/${id}/delete`)
-      let ajusteListagem = this.state.listagem.filter(el => el._id !== id);
-      this.setState( { listagem : ajusteListagem}) 
+    let UserSelecionado = this.state.listagem.filter(el => el._id === id);
+    let itemRem = document.getElementById(`id-${UserSelecionado[0]._id}`);
+    itemRem.classList.toggle("ativo");
   }
 
-    render() {
+  ativarRemocao(id) {
+    api.delete(`/registro/${id}/delete`)
+    let ajusteListagem = this.state.listagem.filter(el => el._id !== id);
+    let self = this;
+    this.setState( { 
+      listagem : [],
+      pg: 0
+    }, () => {
+      self.loadUsuarios();
+    }) 
+    
+  }
+
+  render() {
      
   
 
@@ -146,22 +164,31 @@ class Listagem extends Component {
       
           <section id="post-list" className="col s12"> 
                 <Titnav url="/novo" icon="add" title="Usuários" />
-                <FormBusca nome="Busca CPF / Nome" change={this.buscaChange} />
+                <FormBusca 
+                          nome="Busca CPF / Nome" 
+                          change={this.buscaChange} />
+
                 <div className="col s12 no-padding"> 
+
                 <ListaUsuarios id="listaUsuarios">
                   { 
                      
-                      this.state.listagem.length != 0 ? (
+                    this.state.listagem.length != 0 ? (
                     this.state.listagem.map( item => (
-          
-                        <ItemLista key={item._id} chave={item._id} nome={item.nome}  cpf={Util.MontCPF(`${item.cpf}`)} acao={(() => this.handleDelete(item._id)).bind(this) } />
-            
+                          <ItemLista 
+                                  change={this.buscaCpf}
+                                  key={item._id} 
+                                  chave={item._id} 
+                                  nome={item.nome}  
+                                  cpf={Util.MontCPF(`${item.cpf}`)} 
+                                  acao={(() => this.handleDelete(item._id)).bind(this) } 
+                                  />
                     )) ): <p> Não há registros </p>
-                   
-
+                  
                   }
                 </ListaUsuarios>
-            
+                
+               
           </div>
           </section>
 

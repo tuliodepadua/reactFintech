@@ -70,7 +70,7 @@ export default class Formcadastro extends Component {
         let phoneValueRec = e.target.value.replace(/[^0-9]/g, "")
         let phoneValue = Utils.MontPhone(phoneValueRec)
         e.target.value = phoneValue;
-        this.handleChange({ telefone: phoneValueRec })
+        this.handleChange({ telefone: phoneValueRec.substr(0, 11) })
     }
 
     handleChangeEmail = (e) => {
@@ -84,23 +84,6 @@ export default class Formcadastro extends Component {
     handleChange(state = {}) {
         this.setState(state, this.verificaForm)
     }
-
-    //     {[e.target.name]: e.target.value.replace(/[^0-9]/g, "")},
-    // () => this.verificaForm())
-
-    //     if (e.target.name === 'cpf') {
-    //         e.target.value = Utils.MontCPF(e.target.value.replace(/[^0-9]/g, ""));
-    //         this.setState({[e.target.name]: e.target.value.replace(/[^0-9]/g, "")},
-    //         () => this.verificaForm())
-
-    //     } else if( e.target.name === "telefone" ) {
-    //         e.target.value = Utils.MontPhone(e.target.value.replace(/[^0-9]/g, ""))
-    //         this.setState({cpf: e.target.value.replace(/[^0-9]/g, "")}, this.verificaForm)
-    //     } else {
-    //         this.setState({[e.target.name]: e.target.value}, () => this.verificaForm())
-    //     }
-
-    // }
 
 
 
@@ -128,7 +111,7 @@ export default class Formcadastro extends Component {
             error.push('datanasc')
         }
         
-        console.log(this.state.cpf)
+        // console.log(this.state.cpf)
         if (Utils.CPF(this.state.cpf) === 1 || Utils.CPF(this.state.cpf) === undefined) {
         
             error.push('cpf');
