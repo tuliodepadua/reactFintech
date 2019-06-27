@@ -136,7 +136,7 @@ export default class Formcadastro extends Component {
         }
 
 
-        console.log(error)
+       
         if (this.state.objUs.hasOwnProperty('_id')) {
             if (
                 this.state.objUs.nome === this.state.nome &&
@@ -182,7 +182,7 @@ export default class Formcadastro extends Component {
                 }
 
             }).catch(function (error) {
-                console.log(error);
+                
             }).finally(function () { });
         } else {
             api.post(`/registro`, obj).then(function (response) {
@@ -192,20 +192,18 @@ export default class Formcadastro extends Component {
                         M.toast({ html: response.data })
                         history.goBack();
                         break;
-                    case 403:
-                        M.toast({ html: response.data })
-                        break;
                     case 404:
                         M.toast({ html: 'Não foi possível cadastrar sua requisição' })
                         break;
-                    case 409:
-                        M.toast({ html: response.data })
-                        break;
+                    
                     default:
                         break;
                 }
             }).catch(function (error) {
                 switch (error.response.status) {
+                    case 403:
+                        M.toast({ html: error.response.data })
+                        break;
                     case 409:
                         M.toast({ html: error.response.data })
                         break;
