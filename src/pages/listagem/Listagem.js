@@ -15,11 +15,12 @@ class Listagem extends Component {
     listagem: [],
     buscaStatus: false,
     idSelect: "",
-    tipoBusca: '',
+    
     pg: 0,
     UserSelected: []
   };
   
+  tipoBusca = 'string';
   async componentDidMount(){
       this.registerToSocket();
       this.loadUsuarios();
@@ -63,18 +64,17 @@ class Listagem extends Component {
        
       let busca = e.target.value;
       
-      console.log(busca)
-
       if(busca.length <= 2) {
         if (isNaN(Number(busca))) {
-          this.setState({tipoBusca: 'string'});             
+          this.tipoBusca = 'string';  
         } else {
-          this.setState({tipoBusca: 'numero'});
+          this.tipoBusca = 'numero';
         }
      }
+     console.log(this.tipoBusca)           
 
       
-      if (this.state.tipoBusca == 'numero'){
+      if (this.tipoBusca == 'numero'){
 
         e.target.value = Util.MontCPF(`${busca.replace(/[^0-9]/g, "")}`);
         busca = busca.replace(/[^0-9]/g, "").substr(0, 11)

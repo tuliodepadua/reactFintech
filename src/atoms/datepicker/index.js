@@ -3,15 +3,18 @@ import M from 'materialize-css'
 import Input from './styles'
 
 class Datepicker extends Component{
-    
+    // constructor() {
+    //     super()
+    //     this.instances.bind(this)
+       
+    // }
     async componentDidMount(){
         let self = this;
-        var elems = document.querySelectorAll('.datepicker');
-        let dataVencimento= new Date();
-        var instances = M.Datepicker.init(elems, {
+       
+        this.instances = M.Datepicker.init( document.querySelectorAll('.datepicker') , {
             format: "dd/mm/yyyy",
             autoClose: true,
-            maxDate: dataVencimento,
+            maxDate: new Date(),
             cancel: "Cancelar",
             onClose: self.props.change,
             yearRange: 100,
@@ -25,9 +28,12 @@ class Datepicker extends Component{
         });
     }
 
+    instances = '';
+     
+
     defineData = e => {
-        console.log('Preciso chamar datepicker')
         e.target.value = '';
+        this.instances[0]._handleInputClickBound()
     }
 
     render() {
