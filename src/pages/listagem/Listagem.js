@@ -63,7 +63,6 @@ class Listagem extends Component {
   buscaChange = e => {
        
       let busca = e.target.value;
-      
       if(busca.length <= 2) {
         if (isNaN(Number(busca))) {
           this.tipoBusca = 'string';  
